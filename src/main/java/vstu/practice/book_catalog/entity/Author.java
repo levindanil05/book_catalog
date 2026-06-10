@@ -1,5 +1,6 @@
 package vstu.practice.book_catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,5 +27,6 @@ public class Author {
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Book> books = new ArrayList<>();
 }
