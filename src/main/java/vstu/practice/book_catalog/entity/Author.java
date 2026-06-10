@@ -1,9 +1,7 @@
 package vstu.practice.book_catalog.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "authors")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Author {
