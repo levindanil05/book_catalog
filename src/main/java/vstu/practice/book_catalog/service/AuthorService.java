@@ -2,7 +2,10 @@ package vstu.practice.book_catalog.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vstu.practice.book_catalog.dto.request.AuthorRequestDTO;
+import vstu.practice.book_catalog.dto.response.AuthorResponseDTO;
 import vstu.practice.book_catalog.entity.Author;
+import vstu.practice.book_catalog.mapper.AuthorMapper;
 import vstu.practice.book_catalog.repository.AuthorRepository;
 
 import java.util.List;
@@ -15,21 +18,24 @@ public class AuthorService {
     private final AuthorRepository authorRepository;
 
     // Получить всех авторов
-    public List<Author> getAllAuthors() {
-        return authorRepository.findAll();
+    public List<AuthorResponseDTO> getAllAuthors() {
+        return authorRepository.findAll().stream()
+                .map(AuthorMapper::toResponse)
+                .toList();
     }
 
     // Получить автора по ID
-    public Optional<Author> getAuthorById(Long id) {
-        return authorRepository.findById(id);
+    public Optional<AuthorResponseDTO> getAuthorById(Long id) {
+        return authorRepository.findById(id).map(AuthorMapper::toResponse);
     }
 
     // Создать нового автора
-    public Author createAuthor(Author author) {
-        if (author.getFullName() == null || author.getFullName().trim().isEmpty()) {
+    public AuthorResponseDTO createAuthor(AuthorRequestDTO dto) {
+        if (dto.fullName() == null || dto.fullName().trim().isEmpty()) {
             throw new IllegalArgumentException("Author name cannot be empty");
         }
-        return authorRepository.save(author);
+        Author author = AuthorMapper.toEntity(dto);
+        return AuthorMapper.toResponse(authorRepository.save(author));
     }
 
     // Удалить автора по ID
