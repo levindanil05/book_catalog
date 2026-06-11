@@ -5,6 +5,8 @@ import vstu.practice.book_catalog.dto.response.AuthorResponseDTO;
 import vstu.practice.book_catalog.dto.response.BookResponseDTO;
 import vstu.practice.book_catalog.entity.Book;
 
+import java.util.List;
+
 public class BookMapper {
 
     // Конвертация DTO в Entity
@@ -29,7 +31,7 @@ public class BookMapper {
                     book.getAuthor().getId(),
                     book.getAuthor().getFullName(),
                     book.getAuthor().getBirthDate(),
-                    null
+                    List.of()
             );
         }
 
