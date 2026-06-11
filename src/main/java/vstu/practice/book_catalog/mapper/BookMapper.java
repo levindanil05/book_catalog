@@ -1,6 +1,7 @@
 package vstu.practice.book_catalog.mapper;
 
 import vstu.practice.book_catalog.dto.request.BookRequestDTO;
+import vstu.practice.book_catalog.dto.response.AuthorResponseDTO;
 import vstu.practice.book_catalog.dto.response.BookResponseDTO;
 import vstu.practice.book_catalog.entity.Book;
 
@@ -22,13 +23,23 @@ public class BookMapper {
     public static BookResponseDTO toResponse(Book book) {
         if (book == null) return null;
 
+        AuthorResponseDTO authorDto = null;
+        if (book.getAuthor() != null) {
+            authorDto = new AuthorResponseDTO(
+                    book.getAuthor().getId(),
+                    book.getAuthor().getFullName(),
+                    book.getAuthor().getBirthDate(),
+                    null
+            );
+        }
+
         return new BookResponseDTO(
                 book.getId(),
                 book.getTitle(),
                 book.getIsbn(),
                 book.getDescription(),
                 book.getGenre(),
-                AuthorMapper.toResponse(book.getAuthor())
+                authorDto
         );
     }
 }
