@@ -20,13 +20,13 @@ public class AuthorService {
     // Получить всех авторов
     public List<AuthorResponseDTO> getAllAuthors() {
         return authorRepository.findAll().stream()
-                .map(AuthorMapper::toResponse)
+                .map(AuthorMapper::toResponseWithoutBooks)
                 .toList();
     }
 
     // Получить автора по ID
     public Optional<AuthorResponseDTO> getAuthorById(Long id) {
-        return authorRepository.findById(id).map(AuthorMapper::toResponse);
+        return authorRepository.findById(id).map(AuthorMapper::toResponseWithBooks);
     }
 
     // Создать нового автора
@@ -35,7 +35,7 @@ public class AuthorService {
             throw new IllegalArgumentException("Author name cannot be empty");
         }
         Author author = AuthorMapper.toEntity(dto);
-        return AuthorMapper.toResponse(authorRepository.save(author));
+        return AuthorMapper.toResponseWithBooks(authorRepository.save(author));
     }
 
     // Удалить автора по ID
