@@ -22,7 +22,8 @@ public class BookService {
 
     // Получить все книги
     public List<BookResponseDTO> getAllBooks() {
-        return bookRepository.findAll().stream()
+        return bookRepository.findAllWithAuthor()
+                .stream()
                 .map(BookMapper::toResponse)
                 .toList();
     }

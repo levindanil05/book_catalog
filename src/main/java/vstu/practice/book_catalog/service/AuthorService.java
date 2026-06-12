@@ -19,7 +19,8 @@ public class AuthorService {
 
     // Получить всех авторов
     public List<AuthorResponseDTO> getAllAuthors() {
-        return authorRepository.findAll().stream()
+        return authorRepository.findAllWithBooks()
+                .stream()
                 .map(AuthorMapper::toResponseWithoutBooks)
                 .toList();
     }
